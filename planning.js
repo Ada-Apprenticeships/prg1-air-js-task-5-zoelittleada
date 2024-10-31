@@ -1,3 +1,4 @@
+const { Console } = require('console');
 const fs = require('fs');
 
 function readCsv(filename, delimiter = ',') {
@@ -51,7 +52,7 @@ function revenue(valid_flight_data){
         const business = row[4]*row[7]
         const first = row[5]*row[8]
         const total = economy+business+first
-        listRev.push(total)
+        listRev.push(total.toFixed(2))
     }
     return listRev
 }
@@ -88,7 +89,7 @@ function cost(aeroplaneData, valid_flight_data) {
         const firstSeats = parseInt(flight[5]);
         const allSeats = economySeats + businessSeats + firstSeats;
         const totalCost = (runningCostPerSeatPer100km * flightDistance * allSeats) / 100;
-        costs.push(totalCost);
+        costs.push(totalCost.toFixed(2));
       } 
     }
     return costs;
@@ -96,11 +97,13 @@ function cost(aeroplaneData, valid_flight_data) {
 
 function profitLoss(){
     const revenues = revenue(valid_flight_data); 
+    //console.log(revenues)
     const costs = cost(aeroplaneData, valid_flight_data); 
+    //console.log(costs)
     const profits = [];
     for (let i = 0; i < revenues.length; i++) { 
         const totalProfit = revenues[i] - costs[i];
-        profits.push(totalProfit);
+        profits.push(totalProfit.toFixed(2));
       }
     return profits
 }
