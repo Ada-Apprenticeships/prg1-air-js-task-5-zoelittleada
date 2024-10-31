@@ -1,0 +1,9 @@
+This flight will be from LGW to ORY on a Medium narrow body aircraft and has an expected profit of £18272.00
+This flight will be from MAN to MAD on a Medium wide body aircraft and has an expected profit of £46633.00
+This flight will be from LGW to AMS on a Medium narrow body aircraft and has an expected profit of £11321.76
+This flight will be from MAN to CAI on a Large narrow body aircraft and has an expected profit of £50414.20
+This flight will be from LGW to JFK on a Medium wide body aircraft and has an expected profit of £39736.00
+This flight will be from MAN to ORY on a Medium narrow body aircraft and has an expected profit of £11530.40
+This flight will be from LGW to MAD on a Large narrow body aircraft and has an expected profit of £50487.92
+This flight will be from MAN to AMS on a Medium narrow body aircraft and has an expected profit of £7964.00
+This flight will be from LGW to CAI on a Medium wide body aircraft and has an expected profit of £80158.80

@@ -108,7 +108,23 @@ function profitLoss(){
     return profits
 }
 
+function flightDetail (valid_flight_data){
+    const profits = profitLoss(); 
+    const details = []
+    for (let i = 1; i < valid_flight_data.length; i++){
+        details.push(`This flight will be from ${valid_flight_data[i][0]} to ${valid_flight_data[i][1]} on a ${valid_flight_data[i][2]} aircraft and has an expected profit of £${profits[i]}`)
+    }
+    const fs = require('fs')
+    const fileDetails = details.join('\n');
+    fs.writeFile('Output.txt', fileDetails, (err) => {
+        if (err) throw err;
+    })
+    return details
+
+}
+
 console.log(revenue(valid_flight_data)) //prints list of revenues for each valid flight
 console.log(distance(airportsData, valid_flight_data)) //prints list of distances for each valid flight
-console.log(cost(aeroplaneData, valid_flight_data))
-console.log(profitLoss())
+console.log(cost(aeroplaneData, valid_flight_data)) //prints list of revenues for each valid flight
+console.log(profitLoss()) //prints list of profits for each valid flight
+console.log(flightDetail (valid_flight_data)) //prints list of details for each valid flight
