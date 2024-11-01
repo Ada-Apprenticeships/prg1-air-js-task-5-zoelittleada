@@ -27,55 +27,64 @@ const invalid_flight_data = readCsv('invalid_flight_data.csv');
 const allFlightData = valid_flight_data.concat(invalid_flight_data); //concatenates both csvs
 
 
-function details (airportsData, aeroplanesData, allFlightData){
-  //combine all functions into this one so can handle errors
-  const flightDetails = []
-  for (row of allFlightData){
-    const departureAirport = row[0]
-    const arrivalAirport = row[1]
-    const aircraftType = row[2]
-    const economy = row[3]
-    const business = row[4]
-    const first = row[5]
-    const totalRev = (row[3]*row[6])+(row[4]*row[7])+(row[5]*row[8]) //total revenue per flight
+function details(airportsData, aeroplanesData, allFlightData) {
+  const flightDetails = [];
 
-    //handle invalid airport code
+  for (const row of allFlightData) {
+    const departureAirport = row[0];
+    const arrivalAirport = row[1];
+    const aircraftType = row[2];
+    const economySeats = row[3];
+    const businessSeats = row[4];
+    const firstSeats = row[5];
+    const totalRev = (row[3] * row[6]) + (row[4] * row[7]) + (row[5] * row[8]);
+
+    let flightError = ""; //makes sure error message only pushed once for each flight
+
+    // Handle invalid airport code
     const foundAirport = airportsData.find(airport => airport[0] === arrivalAirport);
     if (!foundAirport) {
-      flightDetails.push(`The arrival airport code for this flight is invalid (${arrivalAirport})`)
+      flightError = `The arrival airport code for this flight is invalid (${arrivalAirport})`;
     }
 
-    //handles too many seats being sold
-    for (line of aeroplanesData){
-      maxRange = line[2]
-      maxEconomy = line[3]
-      maxBusiness = line[4]
-      maxFirst = line[5]
+    // Find matching aeroplane type
+    const plane = aeroplanesData.find(plane => plane[0] === aircraftType);
+    if (plane) {
+      const maxRange = parseInt(plane[2]);
+      const maxEconomy = parseInt(plane[3]);
+      const maxBusiness = parseInt(plane[4]);
+      const maxFirst = parseInt(plane[5]);
 
-      if (economy>maxEconomy){
-        flightDetails.push(`Too many economy seats have been sold`)
-      } else if (business>maxBusiness){
-        flightDetails.push(`Too many business seats have been sold`)
-      } else if (first>maxFirst){
-        flightDetails.push(`Too many first class seats have been sold`)
+      // Handle too many seats being sold
+      if (economySeats > maxEconomy) {
+        flightError = `Too many economy seats have been sold`;
+      } else if (businessSeats > maxBusiness) {
+        flightError = `Too many business seats have been sold`;
+      } else if (firstSeats > maxFirst) {
+        flightError = `Too many first class seats have been sold`;
       }
-    }
 
-    //handles flight range error
-    let distances = 0 
-    const airportData = airportsData.find(airport => airport[0] === arrivalAirport); 
-        if (airportData) { //will execute if a match is found
-            if (departureAirport === 'MAN') {
-              distances = airportData[2]; // gets distance from MAN
-            } else if (departureAirport === 'LGW') {
-              distances = airportData[3]; // get distance from LGW
-            }
+      // Handle flight range error
+      let distance = 0;
+      if (foundAirport) { // Use foundAirport from the airport code check
+        if (departureAirport === 'MAN') {
+          distance = parseFloat(foundAirport[2]);
+        } else if (departureAirport === 'LGW') {
+          distance = parseFloat(foundAirport[3]);
         }
-      if (distances>maxRange){
-        flightDetails.push(`A ${aircraftType} doesn't have the range for this flight`)
+        if (distance > maxRange) {
+          flightError = `A ${aircraftType} doesn't have the range for this flight`;
+        }
       }
+    }
+
+    // Push error message or flight details
+    if (flightError) {
+      flightDetails.push(flightError);
+    } 
   }
-  return flightDetails
+
+  return flightDetails;
 }
 
 console.log(details (airportsData, aeroplaneData, allFlightData))
