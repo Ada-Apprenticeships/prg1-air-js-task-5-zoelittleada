@@ -66,24 +66,33 @@ function details(airportsData, aeroplanesData, allFlightData) {
 
       // Handle flight range error
       let distance = 0;
-      if (foundAirport) { // Use foundAirport from the airport code check
+      if (foundAirport) { 
         if (departureAirport === 'MAN') {
           distance = parseFloat(foundAirport[2]);
         } else if (departureAirport === 'LGW') {
           distance = parseFloat(foundAirport[3]);
         }
+
         if (distance > maxRange) {
           flightError = `A ${aircraftType} doesn't have the range for this flight`;
         }
       }
+
+      // Calculate profit/loss if no errors so far
+      if (!flightError) { 
+        const runningCostPerSeatPer100km = parseFloat(plane[1].replace('£', ''));
+        const allSeats = parseInt(economySeats) + parseInt(businessSeats) + parseInt(firstSeats); // Convert seats to numbers
+        const totalCost = (runningCostPerSeatPer100km * distance * allSeats) / 100;
+        const profitLoss = totalRev - totalCost;
+        flightDetails.push(`This flight will be from ${departureAirport} to ${arrivalAirport} on a ${aircraftType} aircraft and has an expected profit/loss of £${profitLoss.toFixed(2)}`);
+      }
     }
 
-    // Push error message or flight details
+    // Push error message if there is one
     if (flightError) {
       flightDetails.push(flightError);
     } 
   }
-
   return flightDetails;
 }
 
@@ -170,55 +179,8 @@ function flightDetail (valid_flight_data){
     })
     return details
 }
-*/
-
-
-// not working, keep getting undici-types error
-/*
-function error (invalid_flight_data, aeroplaneData, airportsData){
-    const error = []
-    //define maxrange 
-    for (flight of invalid_flight_data) {
-        const arrivalAirport = flight[1]
-        const aircraftType = flight[2];
-        const economySeats = parseInt(flight[3]);
-        const businessSeats = parseInt(flight[4]);
-        const firstSeats = parseInt(flight[5]);
-        const plane = aeroplaneData.find(plane => plane[0] === aircraftType);
-        const airport = airportsData.find(airport => airport[0] === arrivalAirport);
-        if (plane) {
-            const maxRange = parseInt(plane[2]);
-            const maxEconomy = parseInt(plane[3]);
-            const maxBusiness = parseInt(plane[4]);
-            const maxFirst = parseInt(plane[5]);
-            if (maxEconomy < economySeats){
-                error.push('Too many economy seats have been sold')
-            } else if (maxBusiness < businessSeats){
-                error.push('Too many business seats have been sold')
-            } else if (maxFirst < firstSeats){
-                error.push('Too many economy seats have been sold')
-            }
-        }
-        if (airport) {
-            let distanceToArrival = 0;
-            if (departureAirport === 'MAN') {
-              distanceToArrival = airport[2]; 
-            } else if (departureAirport === 'LGW') {
-              distanceToArrival = airport[3];
-            }
-    
-            if (distanceToArrival > maxRange) {
-              errors.push(`${aircraftType} doesn't have the range to fly to ${arrivalAirport}`);
-            }
-          } 
-        } 
-    
-        if (!airport) {
-          errors.push(`${arrivalAirport} is an invalid airport code`);
-        }
-        return errors
-    }
     */
+
 
 
 //console.log(revenue(valid_flight_data)) //prints list of revenues for each valid flight
