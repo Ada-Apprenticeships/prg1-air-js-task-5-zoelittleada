@@ -1,20 +1,20 @@
-This flight will be from MAN to JFK on a Large narrow body aircraft and has an expected profit/loss of £13919.52
-This flight will be from LGW to ORY on a Medium narrow body aircraft and has an expected profit/loss of £18272.00
-This flight will be from MAN to MAD on a Medium wide body aircraft and has an expected profit/loss of £46633.00
-This flight will be from LGW to AMS on a Medium narrow body aircraft and has an expected profit/loss of £11321.76
-This flight will be from MAN to CAI on a Large narrow body aircraft and has an expected profit/loss of £50414.20
-A Medium wide body doesn't have the range for this flight
-This flight will be from MAN to ORY on a Medium narrow body aircraft and has an expected profit/loss of £11530.40
-This flight will be from LGW to MAD on a Large narrow body aircraft and has an expected profit/loss of £50487.92
-This flight will be from MAN to AMS on a Medium narrow body aircraft and has an expected profit/loss of £7964.00
-This flight will be from LGW to CAI on a Medium wide body aircraft and has an expected profit/loss of £80158.80
-A Medium narrow body doesn't have the range for this flight
-Too many economy seats have been sold
-Too many first class seats have been sold
-Too many economy seats have been sold
-Too many business seats have been sold
+This flight will be from MAN to JFK on a large narrow body aircraft and has an expected profit of £13919.52
+This flight will be from LGW to ORY on a medium narrow body aircraft and has an expected profit of £18272.00
+This flight will be from MAN to MAD on a medium wide body aircraft and has an expected profit of £46633.00
+This flight will be from LGW to AMS on a medium narrow body aircraft and has an expected profit of £11321.76
+This flight will be from MAN to CAI on a large narrow body aircraft and has an expected profit of £50414.20
+A medium wide body aircraft doesn't have the range for this flight
+This flight will be from MAN to ORY on a medium narrow body aircraft and has an expected profit of £11530.40
+This flight will be from LGW to MAD on a large narrow body aircraft and has an expected profit of £50487.92
+This flight will be from MAN to AMS on a medium narrow body aircraft and has an expected profit of £7964.00
+This flight will be from LGW to CAI on a medium wide body aircraft and has an expected profit of £80158.80
+A medium narrow body aircraft doesn't have the range for this flight
+20 too many economy seats have been sold (200>180)
+2 too many first class seats have been sold (2>0)
+20 too many economy seats have been sold (180>160)
+5 too many business seats have been sold (25>20)
 The arrival airport code for this flight is invalid (JFKKK)
-Too many economy seats have been sold
-Too many business seats have been sold
+5 too many economy seats have been sold (165>160)
+2 too many business seats have been sold (22>20)
 The arrival airport code for this flight is invalid (AMSSS)
-Too many economy seats have been sold
+5 too many economy seats have been sold (385>380)
