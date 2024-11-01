@@ -25,6 +25,11 @@ const airportsData = readCsv('airports.csv');
 const aeroplaneData = readCsv('aeroplanes.csv');
 const valid_flight_data = readCsv('valid_flight_data.csv');
 const invalid_flight_data = readCsv('invalid_flight_data.csv');
+const allFlightData = valid_flight_data.concat(invalid_flight_data); //concatenates both csvs
+
+function details (airportsData, aeroplanesData, allFlightData){
+  //combine all functions into this one so can handle errors
+}
 
 function revenue(valid_flight_data){
     const listRev = []
@@ -107,7 +112,7 @@ function flightDetail (valid_flight_data){
     return details
 }
 
-// not working 
+// not working, keep getting undici-types error
 /*
 function error (invalid_flight_data, aeroplaneData, airportsData){
     const error = []
