@@ -1,6 +1,5 @@
 const { Console } = require('console');
 const fs = require('fs');
-const { errors } = require('undici-types');
 
 function readCsv(filename, delimiter = ',') {
     try {
@@ -27,10 +26,61 @@ const valid_flight_data = readCsv('valid_flight_data.csv');
 const invalid_flight_data = readCsv('invalid_flight_data.csv');
 const allFlightData = valid_flight_data.concat(invalid_flight_data); //concatenates both csvs
 
+
 function details (airportsData, aeroplanesData, allFlightData){
   //combine all functions into this one so can handle errors
+  const flightDetails = []
+  for (row of allFlightData){
+    const departureAirport = row[0]
+    const arrivalAirport = row[1]
+    const aircraftType = row[2]
+    const economy = row[3]
+    const business = row[4]
+    const first = row[5]
+    const totalRev = (row[3]*row[6])+(row[4]*row[7])+(row[5]*row[8]) //total revenue per flight
+
+    //handle invalid airport code
+    const foundAirport = airportsData.find(airport => airport[0] === arrivalAirport);
+    if (!foundAirport) {
+      flightDetails.push(`The arrival airport code for this flight is invalid (${arrivalAirport})`)
+    }
+
+    //handles too many seats being sold
+    for (line of aeroplanesData){
+      maxRange = line[2]
+      maxEconomy = line[3]
+      maxBusiness = line[4]
+      maxFirst = line[5]
+
+      if (economy>maxEconomy){
+        flightDetails.push(`Too many economy seats have been sold`)
+      } else if (business>maxBusiness){
+        flightDetails.push(`Too many business seats have been sold`)
+      } else if (first>maxFirst){
+        flightDetails.push(`Too many first class seats have been sold`)
+      }
+    }
+
+    //handles flight range error
+    let distances = 0 
+    const airportData = airportsData.find(airport => airport[0] === arrivalAirport); 
+        if (airportData) { //will execute if a match is found
+            if (departureAirport === 'MAN') {
+              distances = airportData[2]; // gets distance from MAN
+            } else if (departureAirport === 'LGW') {
+              distances = airportData[3]; // get distance from LGW
+            }
+        }
+      if (distances>maxRange){
+        flightDetails.push(`A ${aircraftType} doesn't have the range for this flight`)
+      }
+  }
+  return flightDetails
 }
 
+console.log(details (airportsData, aeroplaneData, allFlightData))
+
+/*
 function revenue(valid_flight_data){
     const listRev = []
     for(row of valid_flight_data){
@@ -111,6 +161,8 @@ function flightDetail (valid_flight_data){
     })
     return details
 }
+*/
+
 
 // not working, keep getting undici-types error
 /*
