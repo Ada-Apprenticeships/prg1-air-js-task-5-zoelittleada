@@ -93,6 +93,11 @@ function details(airportsData, aeroplanesData, allFlightData) {
       flightDetails.push(flightError);
     } 
   }
+  const fs = require('fs')
+    const fileDetails = flightDetails.join('\n');
+    fs.writeFile('Output.txt', fileDetails, (err) => {
+        if (err) throw err;
+    })
   return flightDetails;
 }
 
