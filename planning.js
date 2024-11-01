@@ -1,5 +1,6 @@
 const { Console } = require('console');
 const fs = require('fs');
+const { errors } = require('undici-types');
 
 function readCsv(filename, delimiter = ',') {
     try {
@@ -21,29 +22,8 @@ function readCsv(filename, delimiter = ',') {
 }
 
 const airportsData = readCsv('airports.csv');
-/*
-if (airportsData) {
-    airportsData.forEach(row => {
-        console.log(row);
-    });
-}
-    */
 const aeroplaneData = readCsv('aeroplanes.csv');
-/*
-if (aeroplaneData) {
-    aeroplaneData.forEach(row => {
-        console.log(row);
-    });
-}
-    */
 const valid_flight_data = readCsv('valid_flight_data.csv');
-/*
-if (valid_flight_data) {
-    valid_flight_data.forEach(row => {
-        console.log(row);
-    });
-}
-    */
 const invalid_flight_data = readCsv('invalid_flight_data.csv');
 
 function revenue(valid_flight_data){
@@ -127,15 +107,21 @@ function flightDetail (valid_flight_data){
     return details
 }
 
+// not working 
+/*
 function error (invalid_flight_data, aeroplaneData, airportsData){
     const error = []
+    //define maxrange 
     for (flight of invalid_flight_data) {
+        const arrivalAirport = flight[1]
         const aircraftType = flight[2];
         const economySeats = parseInt(flight[3]);
         const businessSeats = parseInt(flight[4]);
         const firstSeats = parseInt(flight[5]);
         const plane = aeroplaneData.find(plane => plane[0] === aircraftType);
+        const airport = airportsData.find(airport => airport[0] === arrivalAirport);
         if (plane) {
+            const maxRange = parseInt(plane[2]);
             const maxEconomy = parseInt(plane[3]);
             const maxBusiness = parseInt(plane[4]);
             const maxFirst = parseInt(plane[5]);
@@ -147,13 +133,31 @@ function error (invalid_flight_data, aeroplaneData, airportsData){
                 error.push('Too many economy seats have been sold')
             }
         }
+        if (airport) {
+            let distanceToArrival = 0;
+            if (departureAirport === 'MAN') {
+              distanceToArrival = airport[2]; 
+            } else if (departureAirport === 'LGW') {
+              distanceToArrival = airport[3];
+            }
+    
+            if (distanceToArrival > maxRange) {
+              errors.push(`${aircraftType} doesn't have the range to fly to ${arrivalAirport}`);
+            }
+          } 
+        } 
+    
+        if (!airport) {
+          errors.push(`${arrivalAirport} is an invalid airport code`);
+        }
+        return errors
     }
-    return error
-}
+    */
+
 
 //console.log(revenue(valid_flight_data)) //prints list of revenues for each valid flight
 //console.log(distance(airportsData, valid_flight_data)) //prints list of distances for each valid flight
 //console.log(cost(aeroplaneData, valid_flight_data)) //prints list of revenues for each valid flight
 //console.log(profitLoss()) //prints list of profits for each valid flight
 //console.log(flightDetail (valid_flight_data)) //prints list of details for each valid flight
-console.log(error (invalid_flight_data, aeroplaneData))
+//console.log(error (invalid_flight_data, aeroplaneData))
